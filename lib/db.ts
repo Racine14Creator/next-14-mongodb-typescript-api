@@ -26,3 +26,5 @@ const connect = async () => {
     console.log(error);
   }
 };
+
+export default connect;
