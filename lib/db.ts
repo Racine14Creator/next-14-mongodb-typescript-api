@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI = process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGO_URI;
 
 const connect = async () => {
   const connectionState = mongoose.connection.readyState;
@@ -17,7 +17,7 @@ const connect = async () => {
   }
 
   try {
-    mongoose.connect(MONGO_URI!, {
+    mongoose.connect(`${MONGO_URI}`, {
       dbName: "rest-api-mongo-protect",
       bufferCommands: true,
     });
