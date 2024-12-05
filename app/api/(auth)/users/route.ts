@@ -8,7 +8,7 @@ export const GET = async () => {
 
     const users = await User.find();
 
-    return new NextResponse(JSON.stringify(users), { status: 200 });
+    return NextResponse.json({ users }, { status: 200 });
   } catch (error) {
     return new NextResponse("Database connection failed", { status: 500 });
   }
@@ -22,6 +22,21 @@ export const POST = async (req: Request) => {
 
     const user = new User({ name, email, password });
     await user.save();
+
+    const emailExists = await User.findOne({ email });
+    if (emailExists) {
+      return new NextResponse(
+        JSON.stringify({ message: "Email already exists" }),
+        { status: 400 }
+      );
+    }
+
+    const nameExists = await User.findOne({ name });
+    if (nameExists)
+      return new NextResponse(
+        JSON.stringify({ message: "Name already exists" }),
+        { status: 400 }
+      );
 
     return new NextResponse(
       JSON.stringify({ message: "User created successfully", user }),
