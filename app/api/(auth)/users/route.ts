@@ -20,6 +20,13 @@ export const POST = async (req: Request) => {
 
     const { name, email, password } = await req.json();
 
+    if (!name || !email || !password) {
+      return new NextResponse(
+        JSON.stringify({ message: "All fields are required" }),
+        { status: 400 }
+      );
+    }
+
     const user = new User({ name, email, password });
     await user.save();
 
